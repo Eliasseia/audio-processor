@@ -5,6 +5,11 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+// Root route to respond with a simple message
+app.get('/', (req, res) => {
+  res.send('Welcome to the Audio Processor API');
+});
+
 app.post('/process-audio', (req, res) => {
   const { inputUrl, outputUrl } = req.body;
   const command = `ffmpeg -i ${inputUrl} -af "silenceremove=stop_periods=-1:stop_duration=0.5:stop_threshold=-50dB,atempo=1.25,volume=10dB" ${outputUrl}`;
